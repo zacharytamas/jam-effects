@@ -1,0 +1,41 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!-- TODO Make this a bower dependency. -->
+<link rel="import" href="../jam-core/behaviors/jam-rig-discovery.html">
+
+<script>
+  Polymer({
+    is: 'effect-gain',
+
+    properties: {
+      stream: {
+        type: Object,
+        notify: true
+      },
+
+      value: {
+        type: Number
+      }
+    },
+
+    behaviors: [
+      Jam.Behaviors.JamRigAutoBind
+    ],
+
+    ready: function() {
+      console.log('effect-gain ready');
+    },
+
+    attached: function() {
+      if (this.rig) {
+        this.stream = this.rig.context.createGain();
+        this.stream.gain.value = 15;
+        console.log('effect-gain created gain node');
+      }
+    },
+
+    connect: function(stream) {
+      this.stream.connect(stream);
+    }
+  });
+</script>
